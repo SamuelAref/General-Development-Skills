@@ -1,0 +1,4 @@
+#Tutorial 1 - Gitlab 
+
+        - Gitlab is a service that allo to host your project on a remote repo & have additional features to help in SDLC and CI, CD
+        - create an account 

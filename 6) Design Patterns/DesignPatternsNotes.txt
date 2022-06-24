@@ -1,0 +1,1130 @@
+Design Patterns 
+
+    # Tutorial #1: What are Design Patterns
+
+        - Software Design pattern is a general, reusable solution to a commonly occuring problem
+          within a given context in software design.
+
+        - Design patterns are formalized best practices that the programmer can use to solve common problems
+          when designing application or system.
+
+    # Tutorial #2: Null Object Pattern 
+
+        - Null Object pattern is used anytime a null object is returned 
+        - Like checking if something is null before accessing it
+        - The idea is to create the same kind of default object instead of checking 
+        - so let us say there is a user class and you want to check if the user exists or not
+        - we can simply check this by creating another nullUser class that will have null properties
+        - this will significantly decrease our null checks like if else, while...
+        
+    # Tutorial #3: Builder Patterns
+
+        - useful for creating objects that have different interlinking parts
+          or many optional and required fields.
+
+          Example problem 
+
+            class Address{
+
+                constructor(zip, street){
+
+                    this.zip = zip;
+                    this.street = street;
+                }
+            }
+
+            class User{
+
+                constructor(name, age, phone, address){
+
+                    this.name = name;
+                    this.age = age;
+                    this.phone = phone;
+                    this.address = address;
+                }
+            }
+
+            //here if we want to give the user a username and address, we have to set age and phone as undefined
+            // this is not readable
+
+            const user = new User('bob', undefined, undefined, new Address('1', 'main'));
+            console.log(user);
+
+          2 ways 
+
+            - original
+
+                class Address{
+
+                    constructor(zip, street){
+
+                        this.zip = zip;
+                        this.street = street;
+                    }
+                }
+
+
+                class User{
+
+                    constructor(name){
+
+                        this.name = name;
+
+                    } 
+                }
+
+
+                class userBuilder{
+
+                    constructor(name){
+
+                        this.user = new User(name)
+                    }
+
+                    setAge(age){
+
+                        this.user.age = age;
+                        return this;
+                    }
+
+                    setPhone(phone){
+
+                        this.user.phone = phone
+                        return this;
+                    }
+
+                    setAddress(address){
+
+                        this.user.address = address;
+                        return this;
+                    }
+
+                    build(){
+
+                        return this.user;
+                    }
+                }
+
+                let user = new userBuilder("Sami").setAge(10)
+                                                .setPhone(12121)
+                                                .setAddress(new Address(1212, "main"))
+                                                .build(); //we can chain it because we returned the objects return this.
+                console.log(user);
+
+
+            - js
+
+                class Address{
+
+                    constructor(zip, street){
+
+                        this.zip = zip;
+                        this.street = street;
+                    }
+                }
+
+                class User{
+
+                    constructor(name, {age, phone = "default", address} = {}){
+
+                        this.name = name;
+                        this.age = age;
+                        this.phone = phone;
+                        this.address = address;
+
+                    } 
+                }
+
+                // here we used an object to get optional parameter in the class
+                let user = new User('sami', {age : 10, phone : 12212, address : new Address(212, "main")});
+                console.log(user);
+
+    # Tutorial #4: Singleton Pattern 
+
+        - creating a single object that is sharable to other objects 
+        - one source of information 
+        - disadvantages - all of your application depends on this single object 
+
+                                                        ---------------------
+                       Object A <---------------------> |                   |  <---------------------> Object C
+                                                        | Singleton         |
+                                                        | Shared Resource   |
+                                                        | Stored State      |
+                       Object B <---------------------> |                   |  <---------------------> Object D
+                                                        ---------------------
+
+        // without singleton pattern 
+
+            fancyLogger.js 
+
+                export default class FancyLogger {
+
+                    constructor(){
+
+                        this.logs = [];
+                    }
+
+                    log(message) {
+
+                        this.logs.push(message);
+                        console.log(`Fancy : ${message}`);
+                    }
+
+                    printLogCount() {
+
+                        console.log(`${this.logs.length} logs`);
+                    }
+                }
+
+
+            firstUse.js
+
+                import FancyLogger  from "./fancyLogger.js";
+                const logger =  new FancyLogger()
+
+                export default function logFirstImplementation(){
+
+
+                    logger.printLogCount();
+                    logger.log('first File');
+                    logger.printLogCount();
+
+
+                }
+
+
+            secondUse.js
+
+                import FancyLogger  from "./fancyLogger.js";
+                const logger =  new FancyLogger()
+
+                export default function logSecondImplementation(){
+
+                    
+                    logger.printLogCount();
+                    logger.log('second File');
+                    logger.printLogCount();
+                    
+                }
+
+
+            main.js
+
+                import logFirstImplementation from "./firstUse.js";
+                import logSecondImplementation from "./secondUse.js";
+
+                logFirstImplementation();
+                logSecondImplementation(); 
+
+
+        // with singleton pattern 
+
+            fancyLogger.js 
+
+                class FancyLogger {
+
+                    constructor(){
+
+                        if(FancyLogger.instance == null){
+
+
+                            this.logs = [];
+                            FancyLogger.instance = this; // here we create the instance only once, that is why we give the 'this' object;
+                        
+                        }
+
+                        return FancyLogger.instance;
+                    }
+
+                    log(message) {
+
+                        this.logs.push(message);
+                        console.log(`Fancy : ${message}`);
+                    }
+
+                    printLogCount() {
+
+                        console.log(`${this.logs.length} logs`);
+                    }
+                }
+
+                let logger = new FancyLogger();
+                Object.freeze(logger); // prevents other people to add or remove entities from this class 
+                export default logger;
+
+
+            firstUse.js
+
+                import logger  from "./fancyLogger.js";
+
+                export default function logFirstImplementation(){
+
+                    logger.printLogCount();
+                    logger.log('first File');
+                    logger.printLogCount();
+
+                }
+
+
+            secondUse.js
+
+                import logger  from "./fancyLogger.js";
+
+                export default function logSecondImplementation(){
+
+                    logger.printLogCount();
+                    logger.log('second File');
+                    logger.printLogCount();
+                    
+                }
+
+
+            main.js
+
+                import logFirstImplementation from "./firstUse.js";
+                import logSecondImplementation from "./secondUse.js";
+
+                logFirstImplementation();
+                logSecondImplementation(); 
+
+    # Tutorial #5: Facade Pattern 
+
+        - To make it easy for our code to change for the future
+
+            original 
+
+                
+                function getUsers() {
+
+                    return fetch('https://jsonplaceholder.typicode.com/users',{
+                        
+                    method : "GET",
+                    headers: { "Content-Type": "application/json"}
+                    }).then (res => res.json())
+                }
+
+                function getUserPosts(userId) {
+
+                    return fetch(`https://jsonplaceholder.typicode.com/posts?userId=${userId}`,{
+                        
+                    method : "GET",
+                    headers: { "Content-Type": "application/json"}
+                    }).then (res => res.json())
+                }
+
+
+                getUsers().then(users => {
+
+                    users.forEach(user => {
+
+                        getUserPosts(user.id).then(posts => {
+
+                            console.log(user.name);
+                            console.log(posts.length);
+
+                        })
+                    })
+                }) 
+
+            simplified 
+
+                function getUsers() {
+
+                    return getFetch('https://jsonplaceholder.typicode.com/users')
+                }
+
+                function getUserPosts(userId) {
+
+                    return getFetch('https://jsonplaceholder.typicode.com/posts', {
+
+                        userId : userId
+                    })
+                }
+
+
+                getUsers().then(users => {
+
+                    users.forEach(user => {
+
+                        getUserPosts(user.id).then(posts => {
+
+                            console.log(user.name);
+                            console.log(posts.length);
+
+                        })
+                    })
+                })
+
+
+                function getFetch(url, params = {}){
+
+                    const queryString = Object.entries(params).map(param => {
+
+                        return `${param[0]} = ${param[1]}`
+                    }).join('&')
+                    return fetch(`${url}?${queryString}`,{
+
+                    method : "GET",
+                    headers: { "Content-Type": "application/json"}
+                    }).then (res => res.json())
+
+
+                }
+
+                //axios 
+                /* 
+
+                function getFetch(url , params = {}){
+
+                    return axios({
+
+                        url: url,
+                        method: "GET",
+                        params: params
+                    }).then(res => res.data)
+                }
+
+
+                */                                         
+
+    # Tutorial #6: Command Pattern 
+
+        - Take different operations(commands) and encapsulate them into individual commands that have 
+          the perform and undo operations 
+
+            original 
+
+                class Calculator {
+
+                    constructor(){
+
+                        this.value = 0;
+                    }
+
+                    add(valueToAdd){
+
+                        this.value = this.value + valueToAdd;
+                    }
+
+                    subtract(valueToSubtract){
+
+                        this.value = this.value - valueToSubtract
+                    }
+
+                    multiply(valueToMultiply){
+
+                        this.value = this.value * valueToMultiply
+                    }
+
+                    divide(valueToDivide){
+
+                        this.value = this.value / valueToDivide;
+                    }
+                }
+
+                const  calculator = new Calculator();
+                calculator.add(10)
+                console.log(calculator.value);
+                calculator.divide(2);
+                console.log(calculator.value);
+
+            Command
+ 
+                class Calculator {
+
+                    constructor(){
+
+                        this.value = 0;
+                        this.history = [];
+                    }
+
+                    executeCommand(command){
+
+                        this.value = command.execute(this.value);
+                        this.history.push(command)
+                    }
+
+                    undo(){
+
+                        const command = this.history.pop()
+                        this.value = command.undo(this.value)
+                    }
+                }
+
+                class AddCommand{
+
+                    constructor(valueToAdd){
+
+                        this.valueToAdd = valueToAdd
+                    }
+
+                    execute(currentValue){
+
+                        return currentValue + this.valueToAdd
+
+                    }
+
+                    undo(currentValue){
+
+                        return currentValue - this.valueToAdd
+
+                    }
+                }
+
+                const  calculator = new Calculator();
+                calculator.executeCommand(new AddCommand(10));
+                console.log(calculator.value);
+                calculator.undo();
+                console.log(calculator.value);
+
+    # Tutorial #7: (SOLID Design Principle) Single Responsibility Principle
+
+        - refers to the concept that  an entity needs to have a single responsibility 
+          so that it can be changed later. 
+        - this principle is helpful because it will be easier, if in the future, we need to change other functionality
+
+            original 
+
+                class CalorieTracker {
+
+                    constructor(maxCalories) {
+
+                        this.maxCalories = maxCalories;
+                        this.currentCalories = 0;
+                    }
+
+                    trackCalories(calorieCount) {
+
+                        this.currentCalories += calorieCount
+
+                        if(this.currentCalories > this.maxCalories) {
+
+                            this.logCalorieSurplus()
+                        }
+                    }
+
+                    logCalorieSurplus() {
+
+                        console.log('Max calories exceeded');
+                    }
+                }
+
+                const calorieTracker = new CalorieTracker(2000);
+                calorieTracker.trackCalories(500);
+                calorieTracker.trackCalories(1000);
+                calorieTracker.trackCalories(700);
+
+            single responsibility 
+
+                logger.js 
+
+                    export default function logMessage(message){
+                    //we can also add other functionalities here
+                    console.log(message);
+                }
+
+                main.js 
+
+                    
+                    import logMessage from "./logger.js";
+
+                    class CalorieTracker {
+
+                        constructor(maxCalories) {
+
+                            this.maxCalories = maxCalories;
+                            this.currentCalories = 0;
+                        }
+
+                        trackCalories(calorieCount) {
+
+                            this.currentCalories += calorieCount
+
+                            if(this.currentCalories > this.maxCalories) {
+
+                                logMessage('Max calories exceeded')
+                            }
+                        }
+
+                    }
+
+                    const calorieTracker = new CalorieTracker(2000);
+                    calorieTracker.trackCalories(500);
+                    calorieTracker.trackCalories(1000);
+                    calorieTracker.trackCalories(700);
+
+    # Tutorial #8: (SOLID Design Principle) Open_Closed Principle 
+
+        - states "software entities (classes, modules, functions) should be open 
+          for extension, but closed for modification 
+
+            original 
+ 
+                function printQuiz(questions){
+
+                    questions.forEach(question => {
+
+                        console.log(question.description);
+
+                        switch(question.type) {
+
+                            case 'boolean':
+
+                                console.log('1. True');
+                                console.log('2. False');
+                                break;
+
+                            case 'multipleChoice':
+
+                                question.options.forEach((option, index) => {
+
+                                    console.log(`${index + 1}. ${option}`);
+                                })
+                                break;
+
+                            case 'text':
+
+                                console.log('Answer:______________');
+                                break;
+
+                            case 'range':
+
+                                console.log('Minimum:______________');
+                                console.log('Maximum:______________');
+                                break;
+
+                        }
+
+                        console.log('');
+                    })
+                }
+
+
+                const questions = [
+
+                    {
+                        type: 'boolean',
+                        description : 'This video is useful.'
+                    },
+
+                    {
+                        type : 'multipleChoice',
+                        description: 'What is your favorite language?',
+                        options: ['CSS', 'HTML', 'JS', 'Python']
+                    },
+
+                    {
+                        type:'text',
+                        description: 'Describe your favorite JS feature.'
+                    },
+
+                    {
+
+                        type : 'range',
+                        description: 'what is the speed limit?'
+
+                    }
+
+
+                ];
+
+                printQuiz(questions);
+
+            open_closed 
+          
+                class BooleanQuestion {
+
+                    constructor(description){
+
+                        this.description = description;
+                    }
+
+                    printQuestionChoices() {
+
+                        console.log('1. True');
+                        console.log('2. False');
+
+                    }
+                }
+
+
+                class MultipleChoiceQuestion {
+
+                    constructor(description, options) {
+
+                        this.description = description;
+                        this.options = options;
+                    }
+
+                    printQuestionChoices(){
+
+                        this.options.forEach((option, index) => {
+
+                            console.log(`${index + 1}. ${option}`);
+                        })
+                    }
+                }
+
+                class TextQuestion {
+
+                    constructor(description) {
+
+                        this.description = description;
+                    }
+
+                    printQuestionChoices() {
+
+                        console.log('Answer: ____________');
+                    }
+                }
+
+                class RangeQuestion {
+
+                    constructor(description){
+
+                        this.description = description
+                    }
+
+                    printQuestionChoices(){
+
+                        console.log('Minimum : ___________');
+                        console.log('Maximum : ___________');
+
+                    }
+                }
+
+                function printQuiz(questions) {
+
+                    questions.forEach(question => {
+
+                        console.log(question.description);
+                        question.printQuestionChoices();
+                        console.log('');
+                    })
+                }
+
+
+                const questions = [
+
+                    new BooleanQuestion('This video is useful.'),
+                    new MultipleChoiceQuestion(
+
+                        'What is your favorite language?',
+                        ['CSS', 'HTML', 'JS', 'Python']
+                    ),
+
+                    new TextQuestion('Describe your favorite JS feature'),
+                    new RangeQuestion('What is the speed limit in your city?'),
+                ];
+
+                printQuiz(questions);
+
+    # Tutorial #9: (SOLID Design Principle) Liskov Substitution principle 
+
+        - Substitutability is a principle in object oriented programming stating that, 
+          in a computer program, if S is a subtype of T, then objects of type T may be replaced
+          with objects of type S (i.e an object of type T may be substituted with any object of 
+          subtype S) without altering any of the desirable properties of the program.
+
+            class Rectangle {
+
+                constructor(width, height) {
+
+                    this.width = width;
+                    this.height = height;
+                }
+
+                setWidth(width){
+
+                    this.width = width;
+                }
+
+                setHeight(height) {
+
+                    this.height = height;
+                }
+
+                area() {
+
+                    return this.width * this.height;
+                }
+            }
+
+            class Square extends Rectangle {
+
+                setWidth(width){
+
+                    this.width = width
+                }
+
+                setHeight(height) {
+
+                    this.height = height;
+                    this.width = height;
+                }
+
+            }
+
+            function increaseRectangleWidth(rectangle) {
+
+                rectangle.setWidth(rectangle.width + 1)
+            }
+
+            const rectangle1 = new Rectangle(10, 2);
+            const rectangle2 = new Rectangle(5, 5);
+
+            increaseRectangleWidth(rectangle1);
+            increaseRectangleWidth(rectangle2);
+
+            console.log(rectangle1.area());
+            console.log(rectangle2.area());
+
+    # Tutorial #10: (SOLID Design Principles) Interface Segregation Principle Explained
+
+        - is a concept of segregating your interfaces and making them smaller 
+        - it doesn't exist but can be applicable in js 
+
+
+        original - interfaces are not applicable in js but conceptually 
+
+            
+            interface Entity{
+
+                attackDamage
+                health
+                name
+
+                move()
+                attack()
+                takeDamage(amout)
+            }
+
+            class Character implements Entity {
+
+                move(){
+
+                    //Do something
+                }
+
+                
+                attack(){
+
+                    //Do something
+                }
+
+                
+                takeDamage(amount){
+
+                    //Do something
+                }
+            }
+
+            class Turret implements Entity {
+
+                move(){
+
+                    //Error: Cannot move
+                }
+            }
+
+            // with class 
+
+                class Entity {
+
+                    constructor(name, attackDamage, health){
+
+                        this.name = name;
+                        this.attackDamage = attackDamage;
+                        this.health = health;
+                    }
+
+                    move(){
+
+                        console.log(`${this.name} moved`);
+                    }
+
+                    attack(targetEntity){
+
+                        console.log(`${this.name} attacked ${targetEntity.name} for ${this.attackDamage} damage`);
+                        targetEntity.takeDamage(this.attackDamage)
+                    }
+
+                    takeDamage(amount){
+
+                        this.health -= amount;
+                        console.log(`${this.name} has ${this.health} health remaining`);
+                    }
+                }
+
+                class Character extends Entity {
+
+
+                }
+                class Wall extends Entity {
+
+                    constructor(name, health){
+
+                        super(name, 0, health)
+                    }
+
+                    move(){
+
+                        return null
+                    }
+
+
+                    attack(){
+
+                        return null
+                    }
+
+                }
+
+                class Turret extends Entity {
+
+                    constructor(name, attackDamage){
+
+                        super(name, attackDamage, -1)
+                    }
+
+                    move() {
+
+                        return null
+                    }
+
+                    takeDamage(){
+
+                        return null
+                    }
+                }
+
+                const turret = new Turret("turret", 5)
+                const character = new Character('Character', 3, 100)
+                const wall = new Wall('wall', 200)
+
+                turret.attack(character)
+                character.move()
+                character.attack(wall)
+                console.log(character);
+
+        Segregation using classes 
+
+            class Entity{
+
+                constructor(name) {
+
+                    this.name = name;
+                }
+            }
+
+            const mover = {
+
+                move(){
+
+                    console.log(`${this.name} moved`);
+                }
+            }
+
+            const attacker = {
+
+                attack(targetEntity) {
+
+                    console.log(`${this.name} attacked ${targetEntity.name} for ${this.attackDamage} damage`);
+                    targetEntity.takeDamage(this.attackDamage)
+                }
+            }
+
+            const hasHealth = {
+
+                takeDamage(amount) {
+
+                    this.health -= amount;
+                    console.log(`${this.name} has ${this.health} health remaining`);
+                }
+            }
+
+            class Character extends Entity {
+
+                constructor(name, attackDamage, health) {
+
+                    super(name);
+                    this.attackDamage = attackDamage;
+                    this.health = health;
+                }
+            }
+
+            Object.assign(Character.prototype, mover)
+            Object.assign(Character.prototype, attacker)
+            Object.assign(Character.prototype, hasHealth)
+
+
+            class Wall extends Entity {
+
+                constructor(name, health) {
+
+                    super(name)
+                    this.health = health 
+                }
+            }
+
+            Object.assign(Wall.prototype, hasHealth);
+
+            class Turret extends Entity {
+
+                constructor(name, attackDamage) {
+
+                    super(name)
+                    this.attackDamage = attackDamage
+                }
+            }
+
+            Object.assign(Turret.prototype, attacker)
+
+            const turret = new Turret('Turret', 5);
+            const character = new Character('Character', 3, 100);
+            const wall = new Wall('Wall', 200);
+
+            turret.attack(character)
+            character.move()
+            character.attack(wall)
+
+    # Tutorial #11: (SOLID Design Principles) Dependency Inversion Principle Explained 
+
+
+        - an iterface in between that handles dependencies 
+
+        original 
+
+            class Store {
+
+                constructor(user) {
+
+                    this.paypal = new Paypal()
+                    this.user = user
+                    // this.stripe = new Stripe(user)
+                }
+
+                purchaseBike(quantity) {
+
+                    this.paypal.makePayment( this.user ,200 * quantity)
+                    // this.stripe.makePayment(200 * quantity * 100)
+                }
+
+                purchaseHelmet(quantity) {
+
+                    this.paypal.makePayment( this.user ,15 * quantity)
+                    
+                }
+            }
+
+            class Stripe {
+
+                constructor(user) {
+
+                    this.user = user
+                }
+
+                makePayment(amountInCents) {
+
+                    console.log(`${this.user} made papyment of $${amountInCents / 100} with Stripe`);
+                }
+            }
+
+            class Paypal {
+
+                makePayment(user, amountInDollars) {
+
+                    console.log(`${this.user} made papyment of $${amountInDollars / 100} with Paypal`);
+                    
+                }
+            }
+
+            const store = new Store('John')
+            store.purchaseBike(2);
+            store.purchaseHelmet(2);
+
+        With interface 
+
+            class Store {
+
+                constructor(paymentprocessor) {
+
+                    this.paymentprocessor = paymentprocessor
+
+                }
+
+                purchaseBike(quantity) {
+
+                    this.paymentprocessor.pay(200 * quantity)
+                    // this.stripe.makePayment(200 * quantity * 100)
+                }
+
+                purchaseHelmet(quantity) {
+
+                    this.paymentprocessor.pay( 15 * quantity)
+                    
+                }
+            }
+
+            class StripePaymentProcessor {
+
+                constructor(user){
+
+                    this.stripe = new Stripe(user)
+                }
+
+                pay(amountInDollars){
+
+                    this.stripe.makePayment(amountInDollars * 100)
+
+                }
+            }
+
+            class paypalPaymentProcessor {
+
+                constructor(user){
+
+                    this.user = user
+                    this.paypal = new Paypal()
+                }
+
+                    pay(amountInDollars){
+
+
+                        this.paypal.makePayment(this.user, amountInDollars * 100)
+
+                    }
+            }
+
+            class Stripe {
+
+                constructor(user) {
+
+                    this.user = user
+                }
+
+                makePayment(amountInCents) {
+
+                    console.log(`${this.user} made papyment of $${amountInCents / 100} with Stripe`);
+                }
+            }
+
+            class Paypal {
+
+                makePayment(user, amountInDollars) {
+
+                    console.log(`${this.user} made papyment of $${amountInDollars / 100} with Paypal`);
+                    
+                }
+            }
+
+            const store1 = new Store(new StripePaymentProcessor('john'))
+            const store2 = new Store(new paypalPaymentProcessor('john'))
+
+            store1.purchaseBike(2);
+            store1.purchaseHelmet(2);
+
+            store2.purchaseBike(2);
+            store2.purchaseHelmet(2);
+
+

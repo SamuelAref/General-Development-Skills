@@ -1,0 +1,115 @@
+
+How Programmers Effectively Search for Answers on the Internet
+
+    #1 - Get to know the resources a project has in their offerings
+
+            - open source (github)
+            - or non open source (google) 
+
+    #2 - Understand How you prefer to learn 
+
+            - blog
+            - video 
+
+    #3 - Actually Read the Technical Documentation 
+
+            - read programming language or framework documentation 
+
+    #4 - Know hot to search for your problem 
+
+            - search the code on github or google 
+            - stack overflow 
+
+    #5 - when all else fails...use quotes 
+
+            - put quotes of the error and search it 
+
+    #6 - Don't be afraid to ask for help 
+
+15 ways to search google 
+
+        #1 Either this or that 
+
+                - if you don't remember the words , separate words with 'or' or '|' 
+
+        #2 Searching using synonyms 
+
+                - add ~ with words to find synonyms 
+                    example  healthy ~ food  
+
+        #3 Searching within websites 
+
+                - search within a website by address then key word 
+                Example website.com someword
+
+        #4 The power of the asterisk 
+
+                - use '*' to insert inplace of the word you forgot 
+                    Example  Cinema the number *
+                             the answer is the number 23
+
+        #5 When lots of words are missing
+
+                if it's the lengthier half of the phrase, you can't remember rather than a single 
+                 key word , try writing out the first and last words and putting "Around + ( the approximte number of missing words)" between them.
+
+                Example - I wandered AROUND(4) cloud.
+                        - this means - 4 words between them might be missing 
+
+        #6 Using a number range
+
+                - adding a time frame in a searc query 
+
+                    Example - scientific  1900...2000
+                            - GoPro Hero5 $100...300
+
+        #7 searching for a title or URL 
+
+                title - for finding title in an article
+                    Example intitle:won the championship
+
+                url - for finding words in url 
+                    Example  inurl:sport 
+
+        #8 Finding Similar Websites 
+
+                related:website
+
+        #9 Whole Phrases 
+
+                to find something specific 
+                    "i'm picking up good vibrations"
+                     this will find exactly how they are typed
+
+        #10 Unimportant search word 
+
+                to not include word in your query use - 
+                    interesting books -buy
+
+        #11 Searching images using images 
+
+                hit the camera button on the search bar and upload the picture 
+                
+        #12 Defining words and learning where they come from 
+
+                define:word 
+                will define words 
+                etymology:word 
+                will find where the word came from 
+
+        #13 Finding a specific file 
+
+                for pdf
+
+                type of search filetype:pdf 
+
+        #14 Using google for spell checking 
+
+        #15 Tracking your packages 
+
+                type your tracking number then search 
+
+        Bonus - Atari Breakout
+
+
+

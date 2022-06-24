@@ -1,0 +1,905 @@
+Data Structures and Algorithms in JavaScript 
+
+    Stack
+
+            - A great example is a stack of books 
+                - you can stack them from bottom up 
+                - you can remove a book from the top/last 
+                - you can add a book on the top/last
+            - FILO ( First in last out)
+            - another example is an array 
+
+            //functions on stack
+
+                // push - to add element on top
+                // pop - to remove element from the last 
+                // peek - to view the last element  
+                // length - to get the last element on the stack 
+        
+        //He did it with function, this is my version of it 
+
+        class Stack{
+
+            static  numberOfBooks = 0;
+            static bookHolder = [];
+
+            constructor(){
+
+                Stack.numberOfBooks++;
+
+            }
+
+            push(bookObject){
+
+                Stack.bookHolder.push(bookObject);
+            }
+
+            pop(){
+
+                Stack.bookHolder.pop();
+
+            }
+
+            peek(){
+
+                return Stack.bookHolder[Stack.bookHolder.length - 1];
+            }
+
+            length(){
+
+                return Stack.bookHolder.length;
+            }
+
+        }
+
+        let bookAdder = new Stack();
+
+        bookAdder.push("one");
+        bookAdder.push("two");
+        bookAdder.push("three");
+        bookAdder.push("four");
+        bookAdder.push("five");
+
+        console.log(bookAdder.peek());
+        console.log(bookAdder.length());
+        bookAdder.pop();
+        console.log(bookAdder.length());
+        console.log(bookAdder.peek());
+
+    Sets 
+
+        - like an array but no duplicate values 
+
+            //Set Funcions 
+
+            // has element --
+            // values --
+            // add element --
+            // remove element --
+            // size --
+            // union --
+            // intersection --
+            // difference  --
+            // subset --
+
+
+            class Set{
+
+
+                constructor(){
+
+                    this.setHolder = [];
+                    this.numberOfValues = 0;
+                }
+
+                values(){
+
+                    return this.setHolder;
+                }
+
+                size(){
+
+                    return this.numberOfValues;
+                }
+
+                add(member){
+
+                    if(this.setHolder.length == 0){
+
+                        this.setHolder.push(member);
+                        this.numberOfValues++;
+
+                    }
+
+                    else if(this.setHolder.indexOf(member) === -1){
+
+                        this.setHolder.push(member);
+                        this.numberOfValues++;
+                    }
+                }
+
+                has(member){
+
+                    if(this.setHolder.indexOf(member) !== -1){
+
+                        return true;
+
+                    }
+
+                    return false;
+                }
+
+                remove(member){
+
+                    if(this.has(member)){
+
+                        let indexHolder = this.setHolder.indexOf(member);
+                        this.setHolder.splice(indexHolder, 1);
+                        return this.setHolder;
+
+                    }
+
+                    return "not in list";
+                }
+
+                union(joiningArray){
+
+
+                    for(let i = 0; i < joiningArray.length; i++){
+
+                        
+                        this.setHolder.push(joiningArray[i]);
+
+                    }
+
+                    return this.setHolder;
+                }
+
+                intersection(intersectingArray){
+
+                    let intersectingHolder = [];
+
+                    for(let i = 0; i < this.setHolder.length; i++){
+
+                        for(let j = 0; j < intersectingArray.length; j++){
+
+                            if(this.setHolder[i] === intersectingArray[j] && intersectingHolder.indexOf(this.setHolder[i]) === -1){
+
+                                intersectingHolder.push(this.setHolder[i]);
+                            }
+                        }
+                    }
+
+                    return intersectingHolder;
+                }
+
+                difference(differenceArray){
+
+                    let differenceHolder = [];
+                    let checker = false;
+
+                    for(let i = 0; i < this.setHolder.length; i++){
+
+                        for(let j = 0; j < differenceArray.length; j++){
+
+                            if(this.setHolder[i] === differenceArray[j] ){
+
+                                checker = true;
+                            }
+                        }
+
+                        if(!checker){
+
+                            if(differenceHolder.indexOf(this.setHolder[i]) === -1){
+
+                                differenceHolder.push(this.setHolder[i]);
+                            }
+                        }
+
+                        checker = false;
+                    }
+
+                    return differenceHolder;
+                }
+
+                subset(subArray){
+
+                    let subChecker = true;
+
+                    for( let i = 0 ; i < this.setHolder.length; i++){
+
+                        if(subArray.indexOf(this.setHolder[i]) === -1){
+
+                            subChecker = false;   
+                        }
+                    }
+
+                    return subChecker;
+                }
+            }
+
+
+            let setA = new Set();
+            let setB = new Set();
+
+            setA.add(1);
+            setA.add(2);
+            // setA.add(4);
+
+            setB.add(5);
+            setB.add(2);
+            setB.add(1);
+
+            console.log(setA.values());
+            console.log(setB.values());
+
+            // console.log(setA.has(1));
+            // console.log(setA.remove(1));
+
+            // console.log(setA.union(setB.setHolder));
+            console.log(setA.intersection(setB.setHolder));
+            console.log(setA.difference(setB.setHolder));
+            console.log(setA.subset(setB.setHolder));
+
+    Queue
+
+        - FIFO (FIrst in First Out)
+
+             //Queue 
+                    //- implements a first in first out principle 
+                    // Functions 
+                        // print 
+                        // enqueue
+                        // dequeue
+                        // front
+                        // size
+                        // isEmpty 
+
+                class Queue{
+
+                    constructor(){
+
+                        this.collection = [];
+                    }
+
+                    print(){
+
+                        return this.collection;
+                    }
+
+                    enqueue(member){
+
+                        return this.collection.push(member);
+
+                    }
+
+                    dequeue(){
+
+                        this.collection.shift();
+                    }
+
+                    front(){
+
+                        return this.collection[0];
+                    }
+
+                    size(){
+
+                        return this.collection.length;
+                    }
+
+                    isEmpty(){
+
+                        return (this.collection.length === 0);
+                    }
+                }
+
+                let line = new Queue();
+
+                line.enqueue(1);
+                line.enqueue(2);
+                line.enqueue(3);
+                console.log(line.print());
+
+                line.dequeue();
+                // line.dequeue();
+                // line.dequeue();
+
+                console.log(line.print());
+                console.log(line.front());
+                console.log(line.size());
+                console.log(line.isEmpty());
+
+             //Priority Queue 
+
+                    // refers when a priority and a value is passed 
+                    // i used map for key value pairs 
+                        //map functions 
+                                //store.get("jeans");
+                                //store.set("hat", 200);
+                                //store.delete("hat");
+                                //console.log(store.has("hat"));
+                                //console.log(store.size);
+
+
+                class PriorityQueue{
+
+
+                    constructor(){
+
+
+                        this.collection = new Map ();
+                    }
+
+
+                    enqueue(value, priority){
+
+                        if(this.collection.size === 0){
+
+                            this.collection.set(value, priority);
+                        }
+
+                        else{
+
+                            this.collection.set(value, priority);
+                            this.collection = new Map( [...this.collection].sort((a, b) => b[0] - a[0]));
+                        }
+                    }
+
+                    dequeue(){
+
+
+                        this.collection.delete([...this.collection].shift()[0]);
+
+                    }
+
+                    front(){
+
+                        if(this.collection.size === 0){
+
+                            return "empty";
+                        }
+                        return this.collection.get([...this.collection][0][0]);
+                    }
+
+
+                    print(){
+
+                        return this.collection;
+                    }
+
+                    size(){
+
+                        return this.collection.size;
+                    }
+
+                    isEmpty(){
+
+                        return (this.collection.size === 0);
+                    }
+                }
+
+
+
+                let priorityLine = new PriorityQueue();
+
+                priorityLine.enqueue(2, 3);
+                priorityLine.enqueue(1, 2);
+                priorityLine.enqueue(6, 5);
+                priorityLine.enqueue(1, 8);
+                priorityLine.enqueue(5, 9);
+                priorityLine.dequeue();
+                priorityLine.dequeue();
+                priorityLine.dequeue();
+                priorityLine.dequeue();
+
+
+                console.log(priorityLine.front());
+
+                console.log(priorityLine.print());
+                console.log(priorityLine.size());
+                console.log(priorityLine.isEmpty());
+
+    Binary Search Tree
+
+                    // Binary Search Tree 
+                // has two children each 
+                // node - left is less than node
+                // node - right is greater than node 
+
+                //functions 
+
+                /*
+                                    //A
+                                        |
+                                    /  \
+                                    B    C
+                                    / \     \
+                                    /   \
+                                /     \
+                                D       G
+                                |       |
+                                /  \    / \
+                                E    F  H   I
+            
+                */
+
+
+            class Node{
+
+                constructor(data, left = null, right = null){
+
+                    this.data = data;
+                    this.left = left;
+                    this.right = right;
+                }
+            }
+
+
+            class BST{
+
+
+                constructor(){
+
+                    this.root = null;
+                }
+
+
+                add(value){
+
+                    const node = this.root;
+
+                    if(node === null){
+
+                        this.root = new Node(value);
+                        console.log(`added ${value}`);
+                        
+                    }
+
+                    else{
+
+                        const searching = function (node) {
+
+
+                            if(value < node.data){
+
+                                if(node.left === null){
+                
+                                    node.left = new Node(value);
+                                    console.log("left");
+
+                
+                                }
+                
+                                else{
+                
+                                    console.log("left left");
+                                    return searching(node.left);
+                
+                
+                                }
+                            
+                            }
+                
+                            else if(value > node.data){
+
+
+                                if(node.right === null){
+                
+                                    node.right = new Node(value);
+                                    console.log("right");
+                
+                                }
+                
+                                else{
+
+                                    console.log("right right");
+                
+                                    return searching(node.right);
+                
+                
+                                }
+                
+                        
+                            }
+                
+                            else{
+                
+                                console.log('hi');
+                            }
+                        }
+
+                        return searching(node);
+
+
+                    }
+
+
+
+                }
+
+                min(){
+
+                    let currentNode = this.root;
+                    while(currentNode.left !== null){
+
+                        currentNode = currentNode.left;
+                    }
+
+                    return currentNode.data;
+
+                }
+
+                isPresent(data){
+
+                    let currentNode = this.root;
+
+                    while(currentNode){
+
+                        if(data === currentNode.data){
+
+                            return true;
+                        }
+
+                        else if(data < currentNode.data){
+
+                            currentNode = currentNode.left;
+                            
+
+                        }
+                        else if(data > currentNode.data){
+
+                            currentNode = currentNode.right;
+                        }
+
+                    }
+
+                    return false;
+
+                }
+            }
+
+            let binary = new BST();
+
+            binary.add(5);
+            binary.add(2);
+            binary.add(3);
+            binary.add(4);
+            console.log(binary.min()); 
+            console.log(binary.isPresent(2));
+
+    Hash Tables
+
+        - used to implement associative arrays in key value pairs 
+
+            // [ ["key 1", value1], ["key 2", value2], [["key 3", value31], ["key 3", value32]]]
+
+
+                class Hash{
+
+
+                    constructor(){
+
+                        this.hash = [];
+                        this.hashValue = 4;
+                        this.hashDivide = 0;
+                    }
+
+                    add(key, value){
+
+
+                        for(let i = 0; i < key.length; i++){
+                
+                            this.hashDivide += key.charCodeAt(i);
+
+                        }
+
+                        let hashing = this.hashDivide % this.hashValue;
+                        let hashHolder = [];
+
+                        if(this.hash[hashing]){
+
+
+                            this.hash[hashing].push([key, value]);
+
+                        }
+
+                        else{
+
+                            this.hash[hashing] = [[key, value]];
+                        }
+
+                        this.hashDivide = 0;
+
+                    }
+
+                    remove(key){
+
+                        for(let i = 0; i < key.length; i++){
+                
+                            this.hashDivide += key.charCodeAt(i);
+
+                        }
+
+                        let hashing = this.hashDivide % this.hashValue;
+
+
+                        if(this.hash[hashing].length === 1){
+
+                            this.hash.splice(hashing, 1);
+                        }
+
+                        else{
+
+                            for(let i = 0; i < this.hash[hashing].length; i++){
+
+                                if(this.hash[hashing][i][0] === key){
+
+                                    this.hash[hashing].splice(i, 1);
+                                }
+                            }
+                        }
+                    }
+
+                    hashTable(){
+
+                        return this.hash;
+                    }
+
+                    lookUp(key){
+
+                        for(let i = 0; i < key.length; i++){
+                
+                            this.hashDivide += key.charCodeAt(i);
+
+                        }
+
+                        let hashing = this.hashDivide % this.hashValue;
+
+
+                        if(this.hash[hashing].length === 1){
+
+                            if(this.hash[hashing][0][0] === key){
+
+                                return this.hash[hashing][0][1];
+
+                            }
+
+                            return undefined;
+                        }
+
+                        else{
+
+                            for(let i = 0; i < this.hash[hashing].length; i++){
+
+                                if(this.hash[hashing][i][0] === key){
+
+                                    return this.hash[hashing][i][1];
+                                }
+
+                            }
+                        }
+
+                    }
+                }
+
+                let hash = new Hash();
+
+                hash.add("sami", 1);
+                hash.add("roland", 2);
+                hash.add("james", 3);
+                hash.add("ras", 4);
+                hash.add("jypsy", 5);
+                hash.add("greg", 6);
+
+                console.log(hash.hashTable());
+                hash.remove("roland");
+                console.log(hash.hashTable());
+                console.log(hash.lookUp("roland"));
+
+    Linked List 
+
+            // linked list is a common data structure that has the node and the pointer to another node
+
+
+                class Node{
+
+                    constructor(value, pointer){
+
+                        this.value = value;
+                        this.pointer = pointer;
+                    }
+
+                }
+
+                class LinkedList{
+
+                    constructor(){
+
+                        this.length = 0;
+                        this.head = null;
+                    }
+
+
+                    add(element){
+
+                        let newNode = 0;
+                        let currentNode = 0;
+
+                        if(this.head === null){
+
+                            this.head = new Node(element, null);
+
+                        }
+
+                        else{
+
+                            currentNode = this.head;
+
+                            while(currentNode.pointer){
+
+                                currentNode = currentNode.pointer;
+                            }
+                        
+                            currentNode.pointer = new Node(element, null);
+
+                        }
+
+                        this.length++;
+
+                    }
+
+                    remove(element){
+
+                        let currentNode = this.head;
+                        let previousNode;
+
+                        if(currentNode.value === element){
+
+                            this.head = currentNode.pointer;
+                        }
+
+                        else{
+
+                            while(currentNode.value !== element){
+
+                                previousNode = currentNode;
+                                currentNode = currentNode.pointer;
+                            }
+                    
+                            previousNode.pointer = currentNode.pointer;
+
+
+                        }
+
+                        this.length--;
+                        return this.head;
+                    }
+
+                    header(){
+
+                        return this.head;
+                    }
+
+                    indexOf(element){
+
+                        let currentNode = this.head;
+                        let index = 0;
+
+                        for(let i = 0;i < this.length; i++ ){
+
+                            if(currentNode.value === element){
+
+                                index = i;
+
+                            }
+
+                            currentNode = currentNode.pointer;
+                        }
+
+                        return index;
+                    }
+
+                    elementAt(index){
+
+
+                        
+                        let currentNode = this.head;
+
+                        for(let i = 0;i < this.length; i++ ){
+
+                            if(index === this.indexOf(currentNode.value)){
+
+                                return currentNode.value;
+
+                            }
+
+                            currentNode = currentNode.pointer;
+                        }
+
+                    }
+
+
+                    addAt(index, element){
+
+                        let currentNode = this.head;
+                        let newInsertion = new Node(element, null);
+                        let previousNode;
+                        let currentIndex = 0;
+
+
+                        if(index > this.length){
+
+                            return false;
+                        }
+
+                        if( index === 0){
+
+                            newInsertion.pointer = currentNode;
+                            this.head = newInsertion;
+                        }
+
+                        else{
+
+                            while(currentIndex < index){
+
+                                currentIndex++;
+                                previousNode = currentNode;
+                                currentNode = currentNode.pointer;
+                            }
+
+                            newInsertion.pointer = currentNode;
+                            previousNode.pointer = newInsertion;
+
+
+                        }
+
+                        return this.head;
+                    }
+
+                    
+                }
+
+
+                let list = new LinkedList();
+
+                console.log(list.length);
+                list.add(2);
+                list.add(3);
+                list.add(4);
+                list.add(5);
+                console.log(list.length);
+                console.log(list.header());
+                // console.log(list.remove(2));
+                console.log(list.length);
+                console.log(list.indexOf(5));
+                console.log(list.elementAt(3));
+                console.log(list.addAt(1, 6));
+
+    Trie
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

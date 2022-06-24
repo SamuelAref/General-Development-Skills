@@ -1,0 +1,47 @@
+
+
+Terms 
+
+    Terminal - the actual program for writing commands 
+    command line - the line we write commands on 
+    prompt - the phrase before the command that is always present 
+
+
+    Commands usually have 3 parts
+
+            program 
+
+            options 
+
+            Arguments
+
+commands 
+
+    pwd - returns where we currently are
+    ls - lists the items in our directory 
+    ls -l - lists everything in long format
+    ls -al
+    cd - to transfer to another directory
+    mkdir - makes a directory
+    cd .. - going back 
+    cd ../toAnotherFolder - moves back and into another box 
+    rmdir - removes directory
+    rm -r directoryName - removes directory with files inside it 
+    touch fileName - used to create a file 
+    rm fileName - removes a file 
+    nano fileName - creates and opens a file to write and edit it with nano editor - this is much better than vim
+    vim fileName - creates and opens a file to write and edit it with vim editor  
+    cat fileName1 fileName2 - concatenates files 
+    cat fileName1 fileName 2 > fileName3 - concatenates fileName1 and fileName2 and puts it in fileName3
+    echo - outputs 
+    echo output >> fileName - output will be put inside fileName 
+    man ls - gives documentation on commands  (click q to exit)
+    apt-get - package manager to install different things 
+
+
+
+
+
+
+
+

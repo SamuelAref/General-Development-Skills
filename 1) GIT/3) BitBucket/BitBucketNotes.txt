@@ -1,0 +1,18 @@
+
+#Tutorial 1 : How to Create BitBucket Account and Create Repository
+
+        - go to bitbucket.org and get free version account 
+        - creating a new Repository is pretty straight forward 
+
+#Tutorial 2 : Add new file and modify the file in Bitbucket Repository 
+
+        - we press the 3 dots and select add new file 
+        - then we can write the file.fileType 
+        - then we can write message and commit 
+        - we can also edit it on the way 
+
+#Tutorial 3 : How to clone a Repository
+
+        ssh 
+
+        http not working

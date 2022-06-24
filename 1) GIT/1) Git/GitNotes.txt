@@ -1,0 +1,270 @@
+
+#Tutorial #1 - Why Use Git 
+
+        - What is GIT?
+
+            - Git is a 'distributed version control system' - eh?
+            - That basically means...
+                - It's a system that records changes to our files over time 
+                - We can recally specific versions of those files at any given time 
+                - Many people can easily collaborate on a project and have their own version of project files on their computer.
+  
+        - Why use Git?
+
+            - Store revisions in a project history in just one directory
+            - Rewind to any revision in the project I wanted to 
+            - Work on new features without messing up the main codebase 
+            - Easily collaborate with other programmers
+
+        - What is GITHUB?
+
+            - Online service that hosts our projects
+            - Share our code with other developers
+            - Developers can download the projects and work on them
+            - They can re-upload their edits and merge them with the main codebase 
+
+#Tutorial #2 - Installing Git
+
+    2 ways to install it 
+
+            - way one 
+                - download it from the website ( https://git-scm.com/downloads) and install it 
+
+            - way two 
+                - download a command line called cmder from website (cmder.net)
+                - it comes pre installed with git
+    
+    Steps to set up git 
+
+        - check if you have git installed 
+
+                git --version 
+
+        - configure the username and email
+
+                username 
+                    git config user.name yourusernamehere
+
+                email 
+
+                    git config user.email youremailhere
+
+                to check them
+
+                    git config user.name 
+                    git config user.email
+
+        - different commands and their uses 
+
+            - cd .. 
+                - this will move up a directory 
+
+            - cd directorName
+                - this will move into the directoryName 
+
+            - ls
+                - will list all the files and directories within the current directory
+
+            - mkdir directoryName
+                - will create a directory with the name directoryName
+
+            - touch filename.filetype
+                - touch will create a file
+
+            - code filename.filetype 
+                - code will open the file with a code editor
+
+            - rm filename.filetype
+                - rm removes a file
+
+            - rmdir directorName
+                - rmdir removes a directory
+
+#Tutorial #3 - How Git works 
+
+    Repositories 
+
+        - A Repository or repo is a container for a project you want to track with Git (e.g. a website project)
+        - can have many different repo's for many different projects on your computer 
+        - Like a project folder which Git tracks the contents for us
+        - can be locally or online 
+        - tracks the .git file 
+
+        Commits
+
+            - are like save file checkpoints
+            - we can return to this checkpoint anytime 
+
+            3 stages of commits 
+
+                Modified 
+                    - changed files , Not commited 
+
+                Staging 
+                    - Add any changed files to staging that you want to commit 
+
+                Committed
+                    - Any files in the staging area are added to the commit when we make one  
+
+#Tutorial #4 - Creating Repositories
+
+        steps to create a Repository
+            - we cd into the directory 
+            - then we git init 
+            - our directory is a repository 
+            - this works the same for a non empty project folder too 
+
+#Tutorial #5 - Staging Files 
+
+        - use of staging is mostly for security, so that we don't change then directly commit our files
+
+        - if there are green files, means they have been changed/modified but not staged or committed 
+        - check changed or uncommitted or unstaged files 
+            git status 
+
+        - to stage file 
+            git add fileName.filetype
+
+        - to remove staged file 
+            git rm --cached index.html
+
+        - to stage multiple files 
+            git add .
+
+#Tutorial #6 - Making Commits 
+
+    After staging files we commit
+     syntax 
+        git commit -m "message"
+        - make sure your commit messages are descriptive on the changes you made
+    
+    to view all the commits 
+        git log   // note that this is in reverse order 
+
+    condensed version of log
+        git log --oneline
+
+#Tutorial #7 - Undoing Things 
+
+    rewind using 3 methods 
+
+        Checkout commit 
+            - not dangerous , not editable
+            - to view what the code looked like before
+
+            syntaxes 
+
+                so to check out 
+                    git checkout "commit Id" // use git log --oneline to get commit Id
+                
+                to revert back to the master 
+                    git checkout master
+
+        Revert commit 
+            - relatively not dangerous
+            - undo's a commit 
+            - doesn't delete the commit tho
+
+            syntax 
+
+                git revert "commi ID"
+                this will prompt you in the text editor 
+
+        Reset commit
+            - dangerous
+            - permanently reverts the commit 
+            - deletes the commits 
+
+            Syntaxes 
+
+               git reset "commit id"
+
+              to delete other commits on the way 
+
+               git reset "commit id" --hard
+
+#Tutorial #8 - Branches
+
+        - creating an isolated environment  to add new features 
+        - syntax
+
+            git branch branchName
+
+        - to view all branches 
+            git branch -a
+
+        - to change branch 
+            git checkout branchName
+
+        - to delete a branch, first go to the master 
+            git branch -d branchName - this will only work if you have merged the branch 
+            git branch -D branchName - this will work regardless
+
+        - simple syntax to create a branch and check it out 
+
+            git checkout -b branchName 
+
+#Tutorial #9 - Merging Branches and Conflicts
+
+    Merging Steps 
+
+        - first remember to checkout in the master branch 
+        - git merge branchName
+
+    Conflicts
+
+        - this may happen due to master branch file being different from the other branch file while merging 
+        - so after getting an error choose your desired option , accept incoming changes or not or keep both 
+        - then add ., then commit without a message 
+        - then if a window pops up press shift + ; the type wq then enter , it would commit it 
+
+#Tutorial #10 - Introduction to GitHub
+
+    What is GitHub 
+
+        - GitHub is a service that lets us set up hosted repositiories 
+        - Central online repository which multiple team-members could access
+
+        2 cases 
+
+            - project repo in the local then push
+
+                - git push "the http link of the repo" branchName
+                - instead of typing the link everytime 
+
+                    git remote add origin "the http link of the repo" branchName 
+                    gir push origin branchName 
+
+            - project repo online then pull 
+                - create a repo 
+                - copy the repo link
+                - git clone repo link
+                - after cloning cd into it and make changes 
+                - then push directly you don't need to specify any origin because it's cloned, it has all the info with it  
+                - you can check the info by git remote -v 
+                - git push origin master or master which ever you have 
+
+#Tutorial #11 - Collaborating on GitHub
+
+    - first we have to keep our code updated by pulling 
+         git pull origin main
+    - then we create a new branch and work on that branch 
+    - then we don't merge with the original branch and push, because the changes might not be agreed up on by all the developers 
+    - so what we don is just push that branch without merging then decide later 
+        - git push origin index-html
+    - then we compare and pull request in github , then if all of us agree, it will be merged 
+    - what if something was forgotten?
+
+        - then we just pull it and do it again  
+
+#Tutorial #12 - Forking & Contributing 
+
+    - To contribute to open source projects we use forking 
+    - fork means, making a copy of the repository in our repository 
+    - then we can clone it 
+    - then after making our changes we can push it 
+    - to contribute to the main , we will request a pull 
+    - if they want they can merge it 
+
+
+

@@ -1,0 +1,35 @@
+
+HTTP, HTTPS and SSL
+
+    HTTP - HyperText Transfer Protocol 
+
+        - used for viewing web pages on the internet
+        - in standard HTTP, all information is sent in clear text 
+        - Vulnerable to hackers, like passwords and personal info 
+        - this is why HTTPS was developed
+
+   HTTPS - Secure HyperText Transfer Protocol
+
+        - HTTP with a security feature 
+        - Encrypts the data that is being retrieved by HTTP 
+        - Uses encryption algorithms to scramble the data that's being transferred 
+        - protects the data by 2 protocols 
+
+            SSL - Secure Sockets Layer 
+
+                - Protocol that is used to ensure security on the internet.
+                - uses public key encryption to secure data.
+
+                How it works 
+
+                    - when we request a website, our browser will request an ssl certificate 
+                    - if it is supplied then secure info can be transferred 
+
+            TLS - Transport Layer security
+
+                - The latest industry standard cryptographic protocol.
+                - The successor to SSL
+                - Authenticates the server,client, and encrypts the data
+
+        
+    
